@@ -19,6 +19,45 @@ export async function POST(request) {
     });
   }
 
+  const { data: temp, error90 } = await supabase2
+    .from("users")
+    .select("id")
+    .eq("account_number", receiver);
+
+  if (error90 || temp.length === 0) {
+    return new Response(
+      JSON.stringify({ message: "Error in fetching receiver's UUID" })
+    );
+  }
+
+  receiver = temp[0];
+
+  const { data: temp3, error901 } = await supabase2
+    .from("users")
+    .select("name")
+    .eq("id", receiver);
+
+  if (error901 || temp3.length === 0) {
+    return new Response(
+      JSON.stringify({ message: "Error in fetching receiver's name" })
+    );
+  }
+
+  const receiverName = temp3[0];
+
+  const { data: temp4, error91 } = await supabase2
+    .from("users")
+    .select("name")
+    .eq("id", user.user.id);
+
+  if (error91 || temp4.length === 0) {
+    return new Response(
+      JSON.stringify({ message: "Error in fetching sender's name" })
+    );
+  }
+
+  const senderName = temp4[0];
+
   let { data: amtSender, error11 } = await supabase2
     .from("users")
     .select("amount")
@@ -71,9 +110,16 @@ export async function POST(request) {
     );
   }
 
-  const { error: error3 } = await supabase2
-    .from("transactions")
-    .insert([{ sender: user.user.id, receiver, amount, success: true }]);
+  const { error: error3 } = await supabase2.from("transactions").insert([
+    {
+      sender: user.user.id,
+      receiver,
+      amount,
+      success: true,
+      sender_name: senderName,
+      receiver_name: receiverName,
+    },
+  ]);
 
   if (error3) {
     await supabase2
@@ -86,7 +132,16 @@ export async function POST(request) {
       .eq("id", receiver);
     await supabase2
       .from("transactions")
-      .insert([{ sender: user.user.id, receiver, amount, success: false }]);
+      .insert([
+        {
+          sender: user.user.id,
+          receiver,
+          amount,
+          success: false,
+          sender_name: senderName,
+          receiver_name: receiverName,
+        },
+      ]);
     return new Response(
       JSON.stringify({ message: "Error in updating transactions" })
     );
