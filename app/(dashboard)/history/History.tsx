@@ -122,6 +122,7 @@ export default function History() {
   useEffect(() => {
     // TODO Fetch transactions from API and remove test data
     setTimeout(() => setLoading(false), 500);
+    fetch("/api/info").then(res => res.json()).then(console.log);
   }, []);
 
   return (
