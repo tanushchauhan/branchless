@@ -4,21 +4,10 @@ export const metadata = {
 };
 
 import { appendWebsiteName } from "@/utils/config";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import History from "./History";
 
-export default function History() {
+export default function HistoryPage() {
   return (
-    <>
-      <Card className="dark max-w-[80%] mx-auto mt-8">
-        <CardHeader>
-          <CardTitle className="text-lg">Transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div>
-            Payment stuff
-          </div>
-        </CardContent>
-      </Card>
-    </>
+    <History />
   );
 }
