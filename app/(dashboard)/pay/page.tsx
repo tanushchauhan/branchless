@@ -11,7 +11,7 @@ export default function Pay() {
     <>
       <Card className="dark max-w-[80%] mx-auto mt-8">
         <CardHeader>
-          <CardTitle className="text-lg">Pay</CardTitle>
+          <CardTitle className="text-xl">Pay</CardTitle>
         </CardHeader>
         <CardContent>
           <div>

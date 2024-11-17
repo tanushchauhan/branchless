@@ -26,7 +26,7 @@ export default function Dashboard() {
     <>
       <Card className="dark max-w-[80%] mx-auto mt-8">
         <CardHeader>
-          <CardTitle className="text-lg">Dashboard</CardTitle>
+          <CardTitle className="text-xl">Dashboard</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-row flex-wrap justify-center gap-8">
           {cards.map((card, i) => (
