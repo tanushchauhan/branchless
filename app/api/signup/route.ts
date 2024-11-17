@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import supabase from "../supabase";
 
-function hashTo10DigitNumber(inputString) {
+function hashTo10DigitNumber(inputString: string) {
   // Create a SHA-256 hash of the input string
   const hash = crypto.createHash("sha256").update(inputString).digest("hex");
 
@@ -11,7 +11,7 @@ function hashTo10DigitNumber(inputString) {
   return tenDigitHash;
 }
 
-export async function POST(request) {
+export async function POST(request: Request) {
   const { email, password, name, phone_number } = await request.json();
 
   const acc_num = hashTo10DigitNumber(email);
@@ -19,7 +19,7 @@ export async function POST(request) {
   const { data: user, error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
-    return new Response(JSON.stringify({ message: "Signup failed", error }), {
+    return Response.json({ message: "Signup failed", error }, {
       status: 400,
     });
   }
@@ -27,30 +27,26 @@ export async function POST(request) {
   const { error: error2 } = await supabase
     .from("users")
     .insert([
-      { id: user.user.id, name, account_number: acc_num, phone_number },
+      { id: user.user?.id, name, account_number: acc_num, phone_number },
     ]);
 
   if (error2) {
     if (error2.code === "23505") {
-      return new Response(
-        JSON.stringify({
+      return Response.json({
           message: "Signup failed",
           error: "Email already in use",
-        }),
+        },
         {
           status: 400,
         }
       );
     }
-    return new Response(
-      JSON.stringify({ message: "Signup failed", error: error2 }),
+    return Response.json({ message: "Signup failed", error: error2 },
       {
         status: 400,
       }
     );
   }
 
-  return new Response(JSON.stringify({ message: "Signup successful" }), {
-    status: 200,
-  });
+  return Response.json({ message: "Signup successful" });
 }
