@@ -9,12 +9,10 @@ export async function POST(req: Request) {
   });
 
   if (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    return Response.json({ error: error.message }, {
       status: 400,
     });
   }
 
-  return new Response(JSON.stringify({ message: "success" }), {
-    status: 200,
-  });
+  return Response.json({ message: "success" });
 }
