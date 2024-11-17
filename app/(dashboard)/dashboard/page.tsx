@@ -30,8 +30,8 @@ export default function Dashboard() {
         </CardHeader>
         <CardContent className="flex flex-row flex-wrap justify-center gap-8">
           {cards.map((card, i) => (
-            <a href={card.url}>
-              <Card key={i} className="transition-colors duration-200 hover:bg-indigo-950 active:bg-indigo-900 cursor-pointer">
+            <a key={i} href={card.url}>
+              <Card className="transition-colors duration-200 hover:bg-indigo-950 active:bg-indigo-900 cursor-pointer">
                 <CardHeader>
                   <CardTitle className="text-lg">{card.name}</CardTitle>
                 </CardHeader>

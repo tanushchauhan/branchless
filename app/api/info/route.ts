@@ -1,27 +1,27 @@
-import supabase from "../supabase";
+import { createClient } from "@/utils/supabase/supabase";
 
 export async function GET() {
+  const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
+  console.log(user);
 
   if (user.user === null) {
-    return new Response(JSON.stringify({ error: "Not Logged in!" }), {
+    return Response.json({ error: "Not Logged in!" }, {
       status: 401,
     });
   }
 
-  let { data: userData, error } = await supabase
+  const { data: userData, error } = await supabase
     .from("users")
     .select("*")
     .eq("id", user.user.id)
     .single();
 
   if (error) {
-    return new Response(JSON.stringify({ error }), {
+    return Response.json({ error }, {
       status: 500,
     });
   }
 
-  return new Response(JSON.stringify(userData), {
-    status: 200,
-  });
+  return Response.json(userData);
 }
