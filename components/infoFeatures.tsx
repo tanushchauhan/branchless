@@ -1,4 +1,5 @@
 export default function InfoFeatures() {
+  const TRANSACTION_HISTORY_URL = "http://127.0.0.1:3000/history";
   return (
     <section className="relative">
       <div
@@ -133,25 +134,32 @@ export default function InfoFeatures() {
               </p>
             </article>
             <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
+              <a
+                href={TRANSACTION_HISTORY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-start transition-transform hover:scale-105 border border-indigo-500 rounded-lg p-4 hover:bg-indigo-600"
               >
-                <path
-                  fillOpacity=".48"
-                  d="M19 8h5v2h-5V8Zm-4 5h9v2h-9v-2Zm9 5H11v2h13v-2Z"
-                />
-                <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Transactions
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
+                <svg
+                  className="mb-3 fill-indigo-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={24}
+                  height={24}
+                >
+                  <path
+                    fillOpacity=".48"
+                    d="M19 8h5v2h-5V8Zm-4 5h9v2h-9v-2Zm9 5H11v2h13v-2Z"
+                  />
+                  <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
+                </svg>
+                <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
+                  Transactions
+                </h3>
+                <p className="text-indigo-200/65">
+                  Track progress across custom flows for your team. Find the right balance
+                  for the user, privacy and security.
+                </p>
+              </a>
             </article>
           </div>
         </div>
