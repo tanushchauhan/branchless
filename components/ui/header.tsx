@@ -5,6 +5,7 @@ import Logo from "./logo";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Toaster } from "./toaster";
+import { Menu } from "lucide-react";
 
 function LinkTab({ name, path }: { name: string, path: string }) {
   return (
@@ -18,6 +19,7 @@ function LinkTab({ name, path }: { name: string, path: string }) {
 
 export default function Header() {
   const [user, setUser] = useState(null);
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
   
@@ -47,7 +49,7 @@ export default function Header() {
           </div>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex md:flex-grow">
+          <nav className="hidden md:flex flex-row flex-grow">
             <ul className="flex flex-grow flex-wrap items-center justify-center gap-4 text-sm lg:gap-8">
               {/* Make dashboard only show if signed in */}
               { user && <LinkTab name="Dashboard" path="/dashboard" /> }
@@ -58,6 +60,12 @@ export default function Header() {
 
           {/* Desktop sign in links */}
           <ul className="flex flex-1 items-center justify-end gap-3">
+            {/* Mobile nav button */}
+            <div className="flex md:hidden">
+              <button className="btn-md" onClick={() => setShowMobileNav(!showMobileNav)}>
+                <Menu size={24} />
+              </button>
+            </div>
             {
               user ? <>
                 <li>
@@ -98,6 +106,15 @@ export default function Header() {
             }
           </ul>
         </div>
+        {/* Mobile navigation */}
+        <nav className="md:hidden">
+          <div className="flex flex-col items-center list-none *:p-1 *:text-md bg-gray-900/90 transition-all" style={{maxHeight: showMobileNav ? 120 : 0}}>
+            {/* Make dashboard only show if signed in */}
+            { user && <LinkTab name="Dashboard" path="/dashboard" /> }
+            <LinkTab name="User Info" path="/info" />
+            <LinkTab name="Features" path="/features" />
+          </div>
+        </nav>
       </div>
     </header>
   );

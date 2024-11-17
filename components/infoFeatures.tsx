@@ -1,5 +1,5 @@
 export default function InfoFeatures() {
-  const TRANSACTION_HISTORY_URL = "http://127.0.0.1:3000/history";
+  const TRANSACTION_HISTORY_URL = "/history";
   return (
     <section className="relative">
       <div
