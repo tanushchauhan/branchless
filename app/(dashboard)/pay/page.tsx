@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //import { f } from "../utils"; // Assuming this is correctly imported
 //import { g } from "../utils"; // Assuming this is correctly imported
 
@@ -29,6 +29,10 @@ export default function PaymentPage() {
     setIsPaymentBooked(true);
     //f(); // Call the imported function
   };
+
+  useEffect(() => {
+    fetch("/api/info").then(res => res.json()).then(data => data.error && router.push("/"));
+  });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">

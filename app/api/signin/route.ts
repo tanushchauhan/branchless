@@ -18,5 +18,5 @@ export async function POST(req: Request) {
     );
   }
 
-  return Response.json({ message: "success" });
+  return Response.json({ message: "success", user });
 }

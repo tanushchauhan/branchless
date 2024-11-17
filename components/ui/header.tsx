@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "./logo";
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 function LinkTab({ name, path }: { name: string, path: string }) {
   return (
@@ -16,12 +17,24 @@ function LinkTab({ name, path }: { name: string, path: string }) {
 
 export default function Header() {
   const [user, setUser] = useState(null);
+  const router = useRouter();
+  const pathName = usePathname();
+  
+  const onSignOut = async () => {
+    await fetch("/api/signout");
+    // setUser(null);
+    router.push("/");
+  };
   useEffect(() => {
-    fetch("/api/info").then((res) => res.json()).then((data) => {
-      if (data.error) return
-      setUser(data);
-    }).catch(console.log);
-  }, []);
+    fetch("/api/info").then(res => res.json()).then(data => {
+      if (data.error) {
+        if (user !== null)
+          setUser(null);
+      }
+      else if (!user)
+        setUser(data);
+    });
+  }, [user, pathName]);
 
   return (
     <header className="z-30 mt-2 w-full md:mt-5 sticky overflow-hidden top-2">
@@ -36,7 +49,7 @@ export default function Header() {
           <nav className="hidden md:flex md:flex-grow">
             <ul className="flex flex-grow flex-wrap items-center justify-center gap-4 text-sm lg:gap-8">
               {/* Make dashboard only show if signed in */}
-              <LinkTab name="Dashboard" path="/dashboard" />
+              { user && <LinkTab name="Dashboard" path="/dashboard" /> }
               <LinkTab name="User Info" path="/info" />
               <LinkTab name="Features" path="/features" />
             </ul>
@@ -55,12 +68,12 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/api/signout"
+                  <button
+                    onClick={onSignOut}
                     className="btn-sm bg-gradient-to-t from-gray-800 to-gray-800 bg-[length:100%_100%] bg-[bottom] py-[5px] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]"
                   >
                     Sign Out
-                  </Link>
+                  </button>
                 </li>
               </> :
               <>

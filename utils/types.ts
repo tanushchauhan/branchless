@@ -3,8 +3,8 @@ interface Transaction {
   senderName: string;
   receiver: string;
   receiverName: string;
-  status: boolean;
+  success: boolean;
   amount: number;
-  transactionId: number;
-  transactionTime: Date;
+  id: number;
+  created_at: string;
 }
