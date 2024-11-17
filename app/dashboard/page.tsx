@@ -1,5 +1,5 @@
 export const metadata = {
-  title: appendWebsiteName("Home"),
+  title: appendWebsiteName("Dashboard"),
   description: "Page description",
 };
 
