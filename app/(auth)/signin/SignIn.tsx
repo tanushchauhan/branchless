@@ -28,7 +28,7 @@ export default function SignIn() {
           setError("Signin failed: " + data.error);
           setSubmitting(false);
         } else {
-          router.push("/");
+          router.push("/dashboard");
         }
     });
     e.preventDefault();
