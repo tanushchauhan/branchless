@@ -1,6 +1,7 @@
-import supabase from "../supabase";
+import { createClient } from "@/utils/supabase/supabase";
 
 export async function GET() {
+  const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   console.log(user);
 
@@ -10,7 +11,7 @@ export async function GET() {
     });
   }
 
-  let { data: userData, error } = await supabase
+  const { data: userData, error } = await supabase
     .from("users")
     .select("*")
     .eq("id", user.user.id)
