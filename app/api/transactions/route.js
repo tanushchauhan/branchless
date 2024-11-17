@@ -1,77 +1,33 @@
-// receiver - uuid, amount
+import supabase2 from "@/utils/supabase/supersupabase";
+import { createClient } from "@/utils/supabase/supabase";
 
-export async function POST(request) {
+export async function GET() {
   const supabase = await createClient();
-  const { receiver, amount } = await request.json();
-  const { data: user } = await supabase.auth.getUser();
+  const { data: user, error } = await supabase.auth.getUser();
 
-  console.log(user);
-
-  if (user.user === null) {
+  if (error) {
     return new Response(JSON.stringify({ error: "Not Logged in!" }), {
       status: 401,
     });
   }
 
-  const amtSender = await supabase2
-    .from("users")
-    .select("amount")
-    .eq("id", user.user.id);
-  const amtReceiver = await supabase2
-    .from("users")
-    .select("amount")
-    .eq("id", receiver);
-
-  if (amtSender < amount) {
-    return new Response(JSON.stringify({ message: "Insufficient balance" }));
-  }
-
-  const { error } = await supabase2
-    .from("users")
-    .update({ amount: amtSender - amount })
-    .eq("id", user.user.id);
-
-  if (error) {
-    return new Response(
-      JSON.stringify({ message: "Error in updating sender's balance", error })
-    );
-  }
-
-  const { error: error2 } = await supabase2
-    .from("users")
-    .update({ amount: amtReceiver + amount })
-    .eq("id", receiver);
+  let { data: transactions, error2 } = await supabase2
+    .from("transactions")
+    .select("*")
+    .or(`sender.eq.${user.user.id},receiver.eq.${user.user.id}`);
 
   if (error2) {
-    await supabase2
-      .from("users")
-      .update({ amount: amtSender + amount })
-      .eq("id", user.user.id);
     return new Response(
-      JSON.stringify({ message: "Error in updating receiver's balance" })
+      JSON.stringify(
+        { error: "Error in fetching transactions" },
+        {
+          status: 500,
+        }
+      )
     );
   }
 
-  const { error: error3 } = await supabase2
-    .from("transactions")
-    .insert([{ sender: user.user.id, receiver, amount, success: true }]);
-
-  if (error3) {
-    await supabase2
-      .from("users")
-      .update({ amount: amtSender + amount })
-      .eq("id", user.user.id);
-    await supabase2
-      .from("users")
-      .update({ amount: amtReceiver - amount })
-      .eq("id", receiver);
-    await supabase2
-      .from("transactions")
-      .insert([{ sender: user.user.id, receiver, amount, success: false }]);
-    return new Response(
-      JSON.stringify({ message: "Error in updating transactions" })
-    );
-  }
-
-  return new Response(JSON.stringify({ message: "Transaction successful" }));
+  return new Response(JSON.stringify(transactions), {
+    status: 200,
+  });
 }
