@@ -1,6 +1,6 @@
 export const metadata = {
   title: appendWebsiteName("Home"),
-  description: "Page description",
+  description: "Home page",
 };
 
 import PageIllustration from "@/components/page-illustration";
