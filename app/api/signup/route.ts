@@ -54,5 +54,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return Response.json({ message: "Signup successful" });
+  return Response.json({ message: "Signup successful", user });
 }

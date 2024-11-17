@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function PaymentPage() {
   const [currentBalance, setCurrentBalance] = useState(1000); // Example balance
@@ -61,8 +61,11 @@ export default function PaymentPage() {
     setError("");
     setCurrentBalance((prev) => prev - amount); // Deduct from balance
     setIsPaymentBooked(true);
-    // f(); // Call the imported function
   }
+
+  useEffect(() => {
+    fetch("/api/info").then(res => res.json()).then(data => data.error && router.push("/"));
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">

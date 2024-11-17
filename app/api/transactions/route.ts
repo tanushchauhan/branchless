@@ -11,23 +11,18 @@ export async function GET() {
     });
   }
 
-  let { data: transactions, error2 } = await supabase2
+  let { data: transactions, error: error2 } = await supabase2
     .from("transactions")
     .select("*")
     .or(`sender.eq.${user.user.id},receiver.eq.${user.user.id}`);
 
   if (error2) {
-    return new Response(
-      JSON.stringify(
-        { error: "Error in fetching transactions" },
-        {
-          status: 500,
-        }
-      )
+    return Response.json({ error: "Error in fetching transactions" },
+      {
+        status: 500,
+      }
     );
   }
 
-  return new Response(JSON.stringify(transactions), {
-    status: 200,
-  });
+  return Response.json(transactions);
 }

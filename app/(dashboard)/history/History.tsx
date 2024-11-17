@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Skeleton } from "@/components/ui/skeleton";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -39,8 +40,8 @@ export const columns: ColumnDef<Transaction>[] = [
     },
   },
   {
-    accessorKey: "transactionTime",
-    accessorFn: (row) => row.transactionTime.toLocaleString(),
+    accessorKey: "created_at",
+    accessorFn: (row) => new Date(row.created_at).toLocaleString(),
     header: ({ column }) => {
       return (
         <Button
@@ -54,8 +55,8 @@ export const columns: ColumnDef<Transaction>[] = [
     },
   },
   {
-    accessorKey: "status",
-    accessorFn: (row) => row.status ? "Success" : "Failed",
+    accessorKey: "success",
+    accessorFn: (row) => row.success ? "Success" : "Failed",
     header: ({ column }) => {
       return (
         <Button
@@ -70,7 +71,7 @@ export const columns: ColumnDef<Transaction>[] = [
     filterFn: (row, id, value) => {
       if (value === "all")
         return true;
-      return row.original.status === (value === "true");
+      return row.original.success === (value === "true");
     },
   },
   {
@@ -101,7 +102,7 @@ export const columns: ColumnDef<Transaction>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.transactionId.toString())}
+              onClick={() => navigator.clipboard.writeText(payment.id.toString())}
             >
               Copy transaction ID
             </DropdownMenuItem>
@@ -114,14 +115,11 @@ export const columns: ColumnDef<Transaction>[] = [
 
 export default function History() {
   const [loading, setLoading] = useState(true);
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    { sender: "123", senderName: "John Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 2500, transactionId: 1234567890, transactionTime: new Date('2023-01-01T10:00:00Z') }, { sender: "456", senderName: "Jane Doe", receiver: "123", receiverName: "John Doe", status: false, amount: 5000, transactionId: 1234567891, transactionTime: new Date('2023-01-02T11:00:00Z') }, { sender: "789", senderName: "Alice Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 1000, transactionId: 1234567892, transactionTime: new Date('2023-01-03T12:00:00Z') }, { sender: "123", senderName: "John Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 2500, transactionId: 1234567893, transactionTime: new Date('2023-01-04T13:00:00Z') }, { sender: "456", senderName: "Jane Doe", receiver: "123", receiverName: "John Doe", status: false, amount: 5000, transactionId: 1234567894, transactionTime: new Date('2023-01-05T14:00:00Z') }, { sender: "789", senderName: "Alice Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 1000, transactionId: 1234567895, transactionTime: new Date('2023-01-06T15:00:00Z') }, { sender: "123", senderName: "John Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 2500, transactionId: 1234567896, transactionTime: new Date('2023-01-07T16:00:00Z') }, { sender: "456", senderName: "Jane Doe", receiver: "123", receiverName: "John Doe", status: false, amount: 5000, transactionId: 1234567897, transactionTime: new Date('2023-01-08T17:00:00Z') }, { sender: "789", senderName: "Alice Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 1000, transactionId: 1234567898, transactionTime: new Date('2023-01-09T18:00:00Z') }, { sender: "123", senderName: "John Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 2500, transactionId: 1234567899, transactionTime: new Date('2023-01-10T19:00:00Z') }, { sender: "456", senderName: "Jane Doe", receiver: "123", receiverName: "John Doe", status: false, amount: 5000, transactionId: 1234567900, transactionTime: new Date('2023-01-11T20:00:00Z') }, { sender: "789", senderName: "Alice Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 1000, transactionId: 1234567901, transactionTime: new Date('2023-01-12T21:00:00Z') }, { sender: "123", senderName: "John Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 2500, transactionId: 1234567902, transactionTime: new Date('2023-01-13T22:00:00Z') }, { sender: "456", senderName: "Jane Doe", receiver: "123", receiverName: "John Doe", status: false, amount: 5000, transactionId: 1234567903, transactionTime: new Date('2023-01-14T23:00:00Z') }, { sender: "789", senderName: "Alice Doe", receiver: "456", receiverName: "Jane Doe", status: true, amount: 1000, transactionId: 1234567904, transactionTime: new Date('2023-01-15T00:00:00Z') } ]);
-  // const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    // TODO Fetch transactions from API and remove test data
-    setTimeout(() => setLoading(false), 500);
-    fetch("/api/info").then(res => res.json()).then(console.log);
+    fetch("/api/transactions").then(res => res.json()).then(data => data.error ? router.push("/") : data).then(setTransactions).finally(() => setLoading(false));
   }, []);
 
   return (

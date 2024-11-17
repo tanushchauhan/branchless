@@ -27,7 +27,7 @@ export function DataTable<TData, TValue>({
     initialState: {
       columnFilters: [
         {
-          id: "status",
+          id: "success",
           value: "all"
         }
       ]
@@ -42,8 +42,8 @@ export function DataTable<TData, TValue>({
     <div className="rounded-md border">
       <div className="flex items-center py-4">
         <Select
-          value={table.getColumn("status")?.getFilterValue() as string}
-          onValueChange={table.getColumn("status")?.setFilterValue}
+          value={table.getColumn("success")?.getFilterValue() as string}
+          onValueChange={table.getColumn("success")?.setFilterValue}
         >
           <SelectTrigger className="ml-2 w-[280px]">
             <SelectValue placeholder="Status" />

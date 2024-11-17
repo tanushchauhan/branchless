@@ -45,7 +45,7 @@ export default function SignIn() {
             </h1>
           </div>
           {/* Contact form */}
-          <form className="mx-auto max-w-[400px]" onKeyDown={e => e.key === "Enter" && e.preventDefault()} onSubmit={onSubmit}>
+          <form className="mx-auto max-w-[400px]" onSubmit={onSubmit}>
             <div className="space-y-5">
               <div>
                 <label
