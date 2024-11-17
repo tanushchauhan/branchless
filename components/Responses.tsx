@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     content:
-      "Prior to sending a payment, you can book it, assuring your vendor that they will recieve the payment, prior to receiving the service.",
+      "We can digitally scan checks through an LLM, allowing for check deposits to occur efficiently without the need for a physical bank.",
     categories: [1, 3],
   },
   {
@@ -25,7 +25,7 @@ const testimonials = [
   },
   {
     content:
-      "We verify government IDs prior to account registration to further enhance security, a feature other digital wallets often lack. This combines the security of a physical bank and the accessibly of a digital one.",
+      "The use of individual QR codes means that large scale or long distance transfers can also occur easily.",
     categories: [1, 2],
   },
   {
