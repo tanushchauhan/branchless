@@ -1,18 +1,20 @@
 "use client";
 
+import { useToast } from "@/hooks/use-toast";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PaymentPage() {
-  const [currentBalance, setCurrentBalance] = useState(1000); // Example balance
   const [paymentAmount, setPaymentAmount] = useState("");
   const [userId, setUserId] = useState(""); // New state for User ID
   const [isPaymentBooked, setIsPaymentBooked] = useState(false);
   const [error, setError] = useState("");
   const [balance, setBalance] = useState<number | null>(null); // State for fetched balance
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+  const { toast } = useToast();
 
   // Populate userId from either the named query parameter or the raw query string
   useEffect(() => {
@@ -24,6 +26,8 @@ export default function PaymentPage() {
 
   // Fetch the balance on mount
   useEffect(() => {
+    fetch("/api/info").then(res => res.json()).then(data => data.error && router.push("/"));
+
     async function fetchBalance() {
       try {
         const res = await fetch("/api/info");
@@ -59,18 +63,44 @@ export default function PaymentPage() {
     }
 
     setError("");
-    setCurrentBalance((prev) => prev - amount); // Deduct from balance
     setIsPaymentBooked(true);
   }
 
-  useEffect(() => {
-    fetch("/api/info").then(res => res.json()).then(data => data.error && router.push("/"));
-  }, []);
+  const onSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    const data = await fetch("/api/pay", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: parseFloat(paymentAmount),
+        receiver: userId,
+      }),
+    }).then(res => res.json()).catch(err => {return {error: "Something went wrong."};});
+    if (data.error) {
+      setIsSubmitting(false);
+      setError(data.error);
+      setIsPaymentBooked(false);
+    }
+    else {
+      toast({
+        title: "Success",
+        description: "Payment successful!",
+        className: "bg-green-600 text-white",
+      })
+      router.push("/dashboard");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
       {balance !== null && (
-        <p className="text-lg mb-2">Current Balance: ${balance?.toFixed(2)}</p>
+        <div className="flex flex-row gap-x-2 mb-2 items-center">
+          <div className="text-lg">Current Balance: ${balance?.toFixed(2)}</div>
+          { isPaymentBooked && <div className="text-red-500 text-lg"> -${paymentAmount}</div> }
+        </div>
       )}
       <h1 className="text-2xl font-bold mb-6">Payment Page</h1>
       {!isPaymentBooked ? (
@@ -109,12 +139,18 @@ export default function PaymentPage() {
         </>
       ) : (
         <>
-          <p className="text-lg mb-4">Payment booked successfully!</p>
+          <p className="text-lg mb-4">Payment saved!</p>
           <button
-            onClick={() => router.push("/dashboard")}
-            className="px-6 py-2 bg-green-500 hover:bg-green-600 rounded"
+            onClick={onSubmit}
+            className="px-4 py-2 bg-green-500 hover:bg-green-600 rounded"
           >
-            Submit Payment
+            <span>Submit Payment</span>
+            {isSubmitting &&
+              <svg className="animate-spin ml-3 h-5 w-5 text-white float-right" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="white" strokeWidth="4" />
+                <path className="opacity-75" fill="white" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            }
           </button>
         </>
       )}

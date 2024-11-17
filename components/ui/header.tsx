@@ -4,6 +4,7 @@ import Link from "next/link";
 import Logo from "./logo";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Toaster } from "./toaster";
 
 function LinkTab({ name, path }: { name: string, path: string }) {
   return (

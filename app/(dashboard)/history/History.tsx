@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/DataTable";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
-    accessorKey: "senderName",
+    accessorKey: "sender_name",
     header: ({ column }) => {
       return (
         <Button
@@ -26,7 +26,7 @@ export const columns: ColumnDef<Transaction>[] = [
     },
   },
   {
-    accessorKey: "receiverName",
+    accessorKey: "receiver_name",
     header: ({ column }) => {
       return (
         <Button

@@ -1,8 +1,8 @@
 interface Transaction {
   sender: string;
-  senderName: string;
+  sender_name: string;
   receiver: string;
-  receiverName: string;
+  receiver_name: string;
   success: boolean;
   amount: number;
   id: number;
