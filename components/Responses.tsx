@@ -25,7 +25,7 @@ const testimonials = [
   },
   {
     content:
-      "The use of individual QR codes means that large scale or long distance transfers can also occur easily.",
+      "The use of individual QR codes means that large scale or long distance transfers can also occur easily and safely.",
     categories: [1, 2],
   },
   {
