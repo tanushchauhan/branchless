@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Logo from "./logo";
 
-function LinkTab({ name }: { name: string }) {
+function LinkTab({ name, path }: { name: string, path: string }) {
   return (
     <li>
-      <Link href="/info" className="btn-md hover:text-indigo-500 transition-colors">
+      <Link href={path} className="btn-md hover:text-indigo-500 transition-colors">
         {name}
       </Link>
     </li>
@@ -27,9 +27,9 @@ export default function Header() {
           <nav className="hidden md:flex md:flex-grow">
             <ul className="flex flex-grow flex-wrap items-center justify-center gap-4 text-sm lg:gap-8">
               {/* Make dashboard only show if signed in */}
-              <LinkTab name="Dashboard" />
-              <LinkTab name="Info" />
-              <LinkTab name="Features" />
+              <LinkTab name="Dashboard" path="/dashboard" />
+              <LinkTab name="Info" path="/info" />
+              <LinkTab name="Features" path="/features" />
             </ul>
           </nav>
 
