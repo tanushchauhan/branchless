@@ -1,12 +1,28 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+async function getData() {
+  const res = await fetch("/api/info");
+  const data = await res.json();
+  const phoneNumber = data.phone_number;
+  const name = data.name;
+  const accountBalance = data.amount;
+}
 export default function InfoFeatures() {
-  const TRANSACTION_HISTORY_URL = "/history";
+  const [user, setUser] = useState<any | null>(null);
+
+  /*useEffect(() => {
+    fetch("/api/info").then
+    const data = await res.json();
+  }, []);*/
+
   return (
     <section className="relative">
       <div
         className="pointer-events-none absolute left-1/2 top-0 -z-10 -mt-20 -translate-x-1/2"
         aria-hidden="true"
-      >
-      </div>
+      ></div>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="border-t py-12 [border-image:linear-gradient(to_right,transparent,theme(colors.slate.400/.25),transparent)1] md:py-20">
           {/* Section header */}
@@ -16,16 +32,15 @@ export default function InfoFeatures() {
                 User Info
               </span>
             </div>
-            
+
             <p className="text-lg text-indigo-200/65">
               Relevant information regarding your profile. Trustworthiness is calculated on a scale from 1-100, 
               depending on quantity of past suspicious activity. 
             </p>
           </div>
-          <div className="flex justify-center pb-4 md:pb-12" data-aos="fade-up">
-          </div>
           {/* Items */}
           <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
+            {/* Box 1 */}
             <article>
               <svg
                 className="mb-3 fill-indigo-500"
@@ -43,10 +58,11 @@ export default function InfoFeatures() {
                 Name
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                name
               </p>
             </article>
+
+            {/* Box 2 */}
             <article>
               <svg
                 className="mb-3 fill-indigo-500"
@@ -65,6 +81,8 @@ export default function InfoFeatures() {
                 balance for the user, privacy and security.
               </p>
             </article>
+
+            {/* Box 3 */}
             <article>
               <svg
                 className="mb-3 fill-indigo-500"
@@ -79,87 +97,11 @@ export default function InfoFeatures() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Trustworthiness 
+                Email 
               </h3>
               <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
+                data yap
               </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path
-                  fillOpacity=".48"
-                  d="m3.031 9.05-.593-.805 1.609-1.187.594.804a6.966 6.966 0 0 1 0 8.276l-.594.805-1.61-1.188.594-.805a4.966 4.966 0 0 0 0-5.9Z"
-                />
-                <path d="m7.456 6.676-.535-.845 1.69-1.07.534.844a11.944 11.944 0 0 1 0 12.789l-.535.845-1.69-1.071.536-.845a9.944 9.944 0 0 0 0-10.647Z" />
-                <path
-                  d="m11.888 4.35-.514-.858 1.717-1.027.513.858a16.9 16.9 0 0 1 2.4 8.677 16.9 16.9 0 0 1-2.4 8.676l-.513.859-1.717-1.028.514-.858A14.9 14.9 0 0 0 14.003 12a14.9 14.9 0 0 0-2.115-7.65Z"
-                  opacity=".48"
-                />
-                <path d="m16.321 2-.5-.866 1.733-1 .5.866A22 22 0 0 1 21 12c0 3.852-1.017 7.636-2.948 10.97l-.502.865-1.73-1.003.501-.865A19.878 19.878 0 0 0 19 12a20 20 0 0 0-2.679-10Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Email
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path
-                  fillOpacity=".48"
-                  d="M12 8.8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
-                />
-                <path d="m7.454 2.891.891-.454L7.437.655l-.891.454a12 12 0 0 0 0 21.382l.89.454.91-1.781-.892-.455a10 10 0 0 1 0-17.818ZM17.456 1.11l-.891-.454-.909 1.782.891.454a10 10 0 0 1 0 17.819l-.89.454.908 1.781.89-.454a12 12 0 0 0 0-21.382Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Phone Number
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <a
-                href={TRANSACTION_HISTORY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-start transition-transform hover:scale-105 border border-indigo-500 rounded-lg p-4 hover:bg-indigo-600"
-              >
-                <svg
-                  className="mb-3 fill-indigo-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                >
-                  <path
-                    fillOpacity=".48"
-                    d="M19 8h5v2h-5V8Zm-4 5h9v2h-9v-2Zm9 5H11v2h13v-2Z"
-                  />
-                  <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
-                </svg>
-                <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                  Transactions
-                </h3>
-                <p className="text-indigo-200/65">
-                  Track progress across custom flows for your team. Find the right balance
-                  for the user, privacy and security.
-                </p>
-              </a>
             </article>
           </div>
         </div>
