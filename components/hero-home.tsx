@@ -23,7 +23,7 @@ export default function HeroHome() {
                 data-aos="fade-up"
                 data-aos-delay={200}
               >
-                A banking solution optimized for purely digital usage with minimal hassle
+                A financial solution optimized for purely digital usage with minimal hassle
               </p>
               <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
                 <RegisterLink />
