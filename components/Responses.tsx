@@ -80,7 +80,7 @@ const testimonials = [
   
 ];
 
-export default function InfoTestimonials() {
+export default function Responses() {
   const masonryContainer = useMasonry();
   const [category, setCategory] = useState<number>(1);
 

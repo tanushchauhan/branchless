@@ -10,7 +10,8 @@ import Features from "@/components/features";
 import Testimonials from "@/components/testimonials";
 import Cta from "@/components/cta";
 import { appendWebsiteName } from "@/utils/config";
-import InfoTestimonials from "@/components/infoTestimonials";
+import InfoTestimonials from "@/components/Responses";
+import Responses from "@/components/Responses";
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
       <Hero />
       <Workflows />
       <Features />*/}
-      <InfoTestimonials/>
+      <Responses/>
       {/*<Cta />*/}
 
     </>
