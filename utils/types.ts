@@ -6,4 +6,5 @@ interface Transaction {
   status: boolean;
   amount: number;
   transactionId: number;
+  transactionTime: Date;
 }

@@ -9,7 +9,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export default function Dashboard() {
   const cards = [
     {
-      name: "Book Payment",
+      name: "Make payment",
       url: "/pay"
     },
     {
