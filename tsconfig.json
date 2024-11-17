@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "utils/supabase/supabase.ts"
-  ],
+, "utils/useLoggedInStatus.js"  ],
   "exclude": ["node_modules"]
 }

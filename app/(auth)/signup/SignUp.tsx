@@ -31,7 +31,7 @@ export default function SignUp() {
           setError("Signup failed: " + data.error);
           setSubmitting(false);
         } else {
-          router.push("/");
+          router.push("/dashboard");
         }
     });
     e.preventDefault();

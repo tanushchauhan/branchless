@@ -3,7 +3,6 @@ import { createClient } from "@/utils/supabase/supabase";
 export async function GET() {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
-  console.log(user);
 
   if (user.user === null) {
     return Response.json({ error: "Not Logged in!" }, {
