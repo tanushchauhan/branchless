@@ -28,7 +28,7 @@ export default function Header() {
             <ul className="flex flex-grow flex-wrap items-center justify-center gap-4 text-sm lg:gap-8">
               {/* Make dashboard only show if signed in */}
               <LinkTab name="Dashboard" path="/dashboard" />
-              <LinkTab name="Info" path="/info" />
+              <LinkTab name="User Info" path="/info" />
               <LinkTab name="Features" path="/features" />
             </ul>
           </nav>
