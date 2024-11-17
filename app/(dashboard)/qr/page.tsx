@@ -20,7 +20,7 @@ export default function QRCodePage() {
           <h1 className="text-2xl font-bold mb-4">QR Code</h1>
           <div className="bg-white p-4 rounded-lg shadow-md">
             <QRCode 
-              value={`http://11.23.7.14:3000/pay?num=${acctNumber}`} 
+              value={`https://branchless.tanushchauhan.com/pay?num=${acctNumber}`} 
               size={200} 
               fgColor="#000000" // Foreground color (QR code squares)
               bgColor="#FFFFFF" // Background color
