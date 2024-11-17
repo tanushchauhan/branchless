@@ -2,6 +2,7 @@
 
 import { useToast } from "@/hooks/use-toast";
 import { WalletCards } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState, useRef } from "react";
 
 export default function DepositPage() {
@@ -9,7 +10,8 @@ export default function DepositPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-
+  const router = useRouter();
+  
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
@@ -31,6 +33,13 @@ export default function DepositPage() {
         ref.current.files = null;
         ref.current.value = "";
       }
+
+      toast({
+        title: "Success",
+        description: "Deposit successful!",
+        className: "bg-green-600 text-white",
+      });
+      router.push("/dashboard");
     } catch (e) {
       console.log(e);
       toast({

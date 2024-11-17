@@ -53,7 +53,7 @@ export default function Header() {
             <ul className="flex flex-grow flex-wrap items-center justify-center gap-4 text-sm lg:gap-8">
               {/* Make dashboard only show if signed in */}
               { user && <LinkTab name="Dashboard" path="/dashboard" /> }
-              <LinkTab name="User Info" path="/info" />
+              {/* <LinkTab name="User Info" path="/info" /> */}
               <LinkTab name="Features" path="/features" />
             </ul>
           </nav>
@@ -107,11 +107,11 @@ export default function Header() {
           </ul>
         </div>
         {/* Mobile navigation */}
-        <nav className="md:hidden">
-          <div className="flex flex-col items-center list-none *:p-1 *:text-md bg-gray-900/90 transition-all" style={{maxHeight: showMobileNav ? 120 : 0}}>
+        <nav className="md:hidden rounded-lg bg-gray-900/90 transition-all overflow-hidden before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] after:absolute after:inset-0 after:-z-10 after:backdrop-blur-sm" style={{maxHeight: showMobileNav ? 120 : 0}}>
+          <div className="p-2 flex flex-col items-center list-none *:p-1 *:text-md">
             {/* Make dashboard only show if signed in */}
             { user && <LinkTab name="Dashboard" path="/dashboard" /> }
-            <LinkTab name="User Info" path="/info" />
+            {/* <LinkTab name="User Info" path="/info" /> */}
             <LinkTab name="Features" path="/features" />
           </div>
         </nav>

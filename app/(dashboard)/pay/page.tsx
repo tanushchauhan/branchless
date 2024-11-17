@@ -89,7 +89,7 @@ export default function PaymentPage() {
         title: "Success",
         description: "Payment successful!",
         className: "bg-green-600 text-white",
-      })
+      });
       router.push("/dashboard");
     }
   };
