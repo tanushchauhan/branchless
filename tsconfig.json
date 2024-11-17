@@ -28,7 +28,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "utils/supabase/supabase.ts"
-, "utils/useLoggedInStatus.js"  ],
+    "utils/supabase/supabase.ts",
+    "utils/useLoggedInStatus.js",
+    "app/api/cheque/route.ts"
+  ],
   "exclude": ["node_modules"]
 }

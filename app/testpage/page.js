@@ -1,27 +1,45 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef, useState } from "react";
 
-async function runthis() {
-  const res = await fetch("/api/signin", {
-    method: "POST",
-    body: JSON.stringify({
-      email: "tanushchauhan07@gmail.com",
-      password: "qwertyuiop",
-    }),
-  });
+export default function Page() {
+  const [file, setFile] = useState();
+  const ref = useRef(null);
 
-  const res2 = await fetch("/api/transactions");
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!file) return;
+    try {
+      const data = new FormData();
+      data.set("file", file);
+      const res = await fetch("/api/cheque", {
+        method: "POST",
+        body: data,
+      });
 
-  const data = await res2.json();
-  console.log(data);
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      if (ref.current) {
+        ref.current.value = "";
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return (
+    <main>
+      <form onSubmit={submit}>
+        <input
+          type="file"
+          name="file"
+          onChange={(e) => setFile(e.target.files?.[0])}
+          ref={ref}
+        />
+        <input type="submit" value="Upload" />
+      </form>
+    </main>
+  );
 }
-
-function Page() {
-  useEffect(() => {
-    runthis();
-  }, []);
-  return <div>Test Page</div>;
-}
-
-export default Page;
